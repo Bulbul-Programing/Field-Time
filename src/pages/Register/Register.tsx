@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useLoginUserMutation, useRegisterUserMutation } from "../../Redux/features/Users/userManagementApi";
 import { verifyToken } from "../../Utils/veryfyToken";
@@ -13,7 +13,7 @@ const Register = () => {
   const [createNewUser, ] = useRegisterUserMutation()
   const [loginUser] = useLoginUserMutation()
   const dispatch = useAppDispatch()
-  
+  const navigate = useNavigate()
 
   const handleSubmit = async(e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -24,11 +24,20 @@ const Register = () => {
     const confirmPassword = target.confirmPassword.value
     const phone = target.phone.value
     const address = target.address.value
+
+    if(password.length < 8){
+      return toast.error('Please Provide minimum 8 character password!')
+    }
+
+    if(password !== confirmPassword){
+      return toast.error('Password dose not match!')
+    }
+
     // checking user exist or not
     setLoading(true)
     const res = await axios.get(`http://localhost:5000/api/auth/signup/isExistUser/${email}`)
     setLoading(false)
-    const toastId = toast.loading('Logging in');
+    const toastId = toast.loading('Register in');
     if(res?.data?.data?._id){
       return toast.error('This user is already exist', {id : toastId, duration : 2000})
     }
@@ -53,6 +62,7 @@ const Register = () => {
       const res = await loginUser(loginData)
       const verifyUser = verifyToken(res?.data?.token)
       dispatch(setUser({verifyUser, token : res?.data?.token}))
+      navigate('/')
       toast.success('User register successfully', {id : toastId, duration : 2000})
     }
    }

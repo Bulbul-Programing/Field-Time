@@ -4,17 +4,38 @@ import { useAppDispatch } from "../../Redux/hooks";
 import { useSelector } from "react-redux";
 import { setUser } from "../../Redux/features/Auth/authSlice";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "../../Redux/features/Users/userManagementApi";
+import { toast } from "sonner";
+import { verifyToken } from "../../Utils/veryfyToken";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false)
   const dispatch = useAppDispatch();
-  const { error } = useSelector((state: any) => state.auth);
+  const [loginUser] = useLoginUserMutation()
+  const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(setUser({ email, password }));
+    const toastId = toast.loading('Logging in');
+    const target = e.currentTarget
+    const email = target.email.value
+    const password = target.password.value
+    const userInfo = {
+      email,
+      password
+    }
+    try{
+      const res = await loginUser(userInfo)
+      const verifyUser = verifyToken(res?.data?.token)
+      dispatch(setUser({verifyUser, token : res?.data?.token}))
+      navigate('/')
+      toast.success('User Login successfully', {id : toastId, duration : 2000})
+    }
+    catch(err){
+      console.log(err);
+      toast.error('something went wrong!', {id : toastId, duration : 2000})
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -30,43 +51,14 @@ const Login = () => {
             Login
           </h2>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-[#ffffff]">
-                Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="px-4 w-full mt-2 outline-none py-3 border-2 focus:border-blue-400 rounded-lg text-slate-500"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-[#ffffff]">
-                Password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="px-4 w-full mt-2 outline-none py-3 border-2 focus:border-blue-400 rounded-lg text-slate-500"
-                placeholder="Enter your password"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-[#3498DB] text-white py-2 px-4 rounded-lg hover:bg-[#2980B9] focus:ring-4 focus:ring-[#3498DB]"
-            >
-              Login
-            </button>
+          <form onSubmit={handleSubmit} action="">
+            <label htmlFor="email">Your Email</label>
+            <input required type="email" name="email" id="email" className="px-4 w-full mt-1 mb-3 outline-none py-3 border-2 focus:border-blue-400 rounded-lg text-slate-500" placeholder="Enter Your Email" />
+            <label htmlFor="password">Your Password</label>
+            <input required type="password" name="password" id="password" className="px-4 w-full mt-1 mb-3 outline-none py-3 border-2 focus:border-blue-400 rounded-lg text-slate-500" placeholder="Enter Your Password" />
+            {
+              loading ? <div className="w-full flex justify-center cursor-pointer bg-[#3498DB] text-white py-2 px-4 rounded-lg hover:bg-[#2980B9] focus:ring-4 focus:ring-[#3498DB]"><span className="loading loading-spinner loading-md"></span></div> : <input className="w-full cursor-pointer bg-[#3498DB] text-white py-2 px-4 rounded-lg hover:bg-[#2980B9] focus:ring-4 focus:ring-[#3498DB]" type="submit" name="" id="" />
+            }
           </form>
 
           <div className="mt-4 flex items-center justify-between">
