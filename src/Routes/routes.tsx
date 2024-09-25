@@ -3,6 +3,9 @@ import App from "../App";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import AdminDashboardHome from "../pages/Dashboard/AdminDashboard/adminDashboardHome";
+
+
 
 const router = createBrowserRouter([
   {
@@ -14,6 +17,10 @@ const router = createBrowserRouter([
             element : <Home></Home>
         }
     ]
+  },
+  {
+    path : '/admin/dashboard/home',
+    element : <AdminDashboardHome></AdminDashboardHome>
   },
   {
     path : '/login',

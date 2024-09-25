@@ -1,10 +1,30 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import './navbar.css'
+import "./navbar.css";
+import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
+import {
+  logout,
+  TUser,
+  useCurrentToken,
+} from "../../Redux/features/Auth/authSlice";
+import { verifyToken } from "../../Utils/veryfyToken";
+import { toast } from "sonner";
+import { RootState } from "../../Redux/store";
+import { useUserInfoQuery } from "../../Redux/features/Users/userManagementApi";
 
 const Navbar = () => {
   const [hideNavbar, setHideNavbar] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
+  const token = useAppSelector(useCurrentToken);
+  const user = useAppSelector((state: RootState) => state.auth.user);
+  const { data: userInfo, isLoading } = useUserInfoQuery(user?.email);
+
+  let currentUser;
+  const dispatch = useAppDispatch();
+
+  if (token) {
+    currentUser = verifyToken(token) as TUser;
+  }
 
   const navElement = (
     <>
@@ -20,12 +40,14 @@ const Navbar = () => {
       >
         Shop
       </NavLink>
-      <NavLink
-        className="px-4 py-1 mr-2 rounded-sm text-[#34495E] hover:text-[#3498DB] font-bold font-[lato]"
-        to="/dashboard/home"
-      >
-        Dashboard
-      </NavLink>
+      {currentUser?.email && (
+        <NavLink
+          className="px-4 py-1 mr-2 rounded-sm text-[#34495E] hover:text-[#3498DB] font-bold font-[lato]"
+          to={`/${currentUser?.role}/dashboard/home`}
+        >
+          Dashboard
+        </NavLink>
+      )}
       <NavLink
         className="px-4 py-1 mr-2 rounded-sm text-[#34495E] hover:text-[#3498DB] font-bold font-[lato]"
         to="/about"
@@ -43,6 +65,11 @@ const Navbar = () => {
     }
     setScrollValue(this.scrollY);
   });
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Log out success");
+  };
 
   return (
     <div
@@ -77,16 +104,42 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="flex items-center gap-x-2">
-            <img className="w-12 rotate-360" src="https://res.cloudinary.com/dmncfe9eh/image/upload/v1726666040/New_Project_11_nbylqf.png" alt="" />
-            <p className="text-2xl font-bold"><span className="text-[#34495E]">Field</span> Time</p>
+            <img
+              className="w-12 rotate-360"
+              src="https://res.cloudinary.com/dmncfe9eh/image/upload/v1726666040/New_Project_11_nbylqf.png"
+              alt=""
+            />
+            <p className="text-2xl font-bold">
+              <span className="text-[#34495E]">Field</span> Time
+            </p>
           </div>
         </div>
         <div className=" hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navElement}</ul>
         </div>
         <div className="flex items-center gap-x-4">
-          <img className="w-8 border border-white rounded-full" src="https://res.cloudinary.com/dmncfe9eh/image/upload/v1726668248/icons8-avatar-100_czsbtb.png" alt="" />
-          <NavLink to='/login' className='btn btn-sm'>Login</NavLink>
+          {userInfo?.data?.profileImage && (
+            <img
+              className="w-10 rounded-full border"
+              src={userInfo?.data?.profileImage}
+              alt=""
+            />
+          )}
+          {currentUser?.email ? (
+            <button
+              onClick={() => handleLogout()}
+              className="btn btn-sm bg-[#3498DB] hover:bg-[#2e8dcc] border-none text-white"
+            >
+              Log out
+            </button>
+          ) : (
+            <NavLink
+              to="/login"
+              className="btn btn-sm bg-[#3498DB] hover:bg-[#2e8dcc] border-none text-white"
+            >
+              Login
+            </NavLink>
+          )}
         </div>
       </div>
     </div>

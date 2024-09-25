@@ -10,6 +10,14 @@ const userManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+    userInfo: builder.query({
+      query: (args) => {
+        return {
+          url: `/auth/userData/${args}`,
+          method: "GET",
+        };
+      },
+    }),
     registerUser: builder.mutation({
       query: (args) => {
         return {
@@ -32,4 +40,4 @@ const userManagementApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useIsUserExistQuery , useRegisterUserMutation, useLoginUserMutation} = userManagementApi;
+export const { useIsUserExistQuery , useRegisterUserMutation, useLoginUserMutation, useUserInfoQuery} = userManagementApi;

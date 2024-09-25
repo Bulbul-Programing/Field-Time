@@ -25,16 +25,18 @@ const Login = () => {
       email,
       password
     }
+    
     try{
-      const res = await loginUser(userInfo)
-      const verifyUser = verifyToken(res?.data?.token)
-      dispatch(setUser({verifyUser, token : res?.data?.token}))
+      const res = await loginUser(userInfo).unwrap()
+      
+      const verifyUser = verifyToken(res?.token)
+      dispatch(setUser({user : verifyUser, token : res?.token}))
       navigate('/')
       toast.success('User Login successfully', {id : toastId, duration : 2000})
     }
-    catch(err){
+    catch(err : any){
       console.log(err);
-      toast.error('something went wrong!', {id : toastId, duration : 2000})
+      toast.error(err.data.message, {id : toastId, duration : 2000})
     }
   };
 
@@ -47,7 +49,7 @@ const Login = () => {
     <div className=" bg-center bg-cover bg-[url('https://res.cloudinary.com/depy0i4bl/image/upload/v1727099505/mitch-rosen-g9SNY0aLMF0-unsplash_1_1_qigu2z.jpg')]">
       <div className="bg-black/60 w-full flex items-center justify-center h-screen">
         <div className="backdrop-blur-lg border border-white bg-blue-500 bg-opacity-10 text-white p-8 rounded-lg shadow-lg w-96">
-          <h2 className="text-2xl font-semibold mb-6 text-center text-[#ffffff]">
+          <h2 className="text-2xl font-semibold mb-2 text-center text-[#ffffff]">
             Login
           </h2>
 
