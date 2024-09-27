@@ -11,7 +11,7 @@ import { RootState } from "../../../Redux/store";
 import { useUserInfoQuery } from "../../../Redux/features/Users/userManagementApi";
 import { verifyToken } from "../../../Utils/veryfyToken";
 
-const AdminDashboardHome = () => {
+const UserDashboardHome = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const token = useAppSelector(useCurrentToken);
@@ -61,7 +61,7 @@ const AdminDashboardHome = () => {
   ];
 
   return (
-    <div className="relative max-w-7xl mx-auto">
+    <div className="max-w-7xl relative mx-auto  flex flex-col md:flex-col lg:flex-row">
       <div className=" block md:block lg:hidden" onClick={handleDrawerToggle}>
         <div className="flex mx-1 rounded-lg p-5 shadow-xl justify-between">
           <IoMenu className="text-2xl text-black " />
@@ -70,14 +70,14 @@ const AdminDashboardHome = () => {
 
       {isDrawerOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-10 z-20"
+          className=" inset-0 bg-black opacity-10 z-20"
           onClick={handleOutsideClick}
         ></div>
       )}
 
       <div
-        className={`fixed top-0 left-0 h-screen bg-[#f1f2f7] text-black transition-all duration-300 ease-in-out transform ${
-          isExpanded ? "w-48" : "w-16"
+        className={`absolute top-0 left-0 h-screen lg:block bg-[#f1f2f7] text-black transition-all duration-300 ease-in-out transform ${
+          isExpanded ? "w-48 block" : "w-16 hidden"
         } ${
           isDrawerOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         } z-30`}
@@ -111,11 +111,11 @@ const AdminDashboardHome = () => {
         </div>
       </div>
      
-      <div className="bg-slate-100 p-2 md:p-2 lg:pl-20 pt-5">
+      <div className="bg-slate-100 lg:ml-16 px-6 p-2 md:p-2 pt-5">
         <Outlet></Outlet>
       </div>
     </div>
   );
 };
 
-export default AdminDashboardHome;
+export default UserDashboardHome;

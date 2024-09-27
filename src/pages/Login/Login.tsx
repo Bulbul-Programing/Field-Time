@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { useAppDispatch } from "../../Redux/hooks";
-import { useSelector } from "react-redux";
 import { setUser } from "../../Redux/features/Auth/authSlice";
 import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,15 +27,17 @@ const Login = () => {
     
     try{
       const res = await loginUser(userInfo).unwrap()
-      
+      setLoading(true)
       const verifyUser = verifyToken(res?.token)
       dispatch(setUser({user : verifyUser, token : res?.token}))
       navigate('/')
       toast.success('User Login successfully', {id : toastId, duration : 2000})
+      setLoading(false)
     }
     catch(err : any){
       console.log(err);
       toast.error(err.data.message, {id : toastId, duration : 2000})
+      setLoading(false)
     }
   };
 
