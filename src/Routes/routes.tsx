@@ -7,6 +7,7 @@ import AdminDashboardHome from "../pages/Dashboard/AdminDashboard/AdminDashboard
 import DashboardHome from "../pages/Dashboard/UserDashboard/DashboardHome";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import UserDashboardHome from "../pages/Dashboard/UserDashboard/UserDashboardHome";
+import MyBooking from "../pages/Dashboard/UserDashboard/MyBooking";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/user/dashboard/home",
+    path: "/user/dashboard",
     element: (
       <ProtectedRoute role="user">
         <UserDashboardHome />
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/user/dashboard/home",
         element: <DashboardHome />,
+      },
+      {
+        path: "/user/dashboard/bookings",
+        element: <MyBooking />,
       },
     ],
   },

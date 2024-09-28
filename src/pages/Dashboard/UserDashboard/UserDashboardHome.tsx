@@ -10,6 +10,8 @@ import { TUser, useCurrentToken } from "../../../Redux/features/Auth/authSlice";
 import { RootState } from "../../../Redux/store";
 import { useUserInfoQuery } from "../../../Redux/features/Users/userManagementApi";
 import { verifyToken } from "../../../Utils/veryfyToken";
+import { FaCalendarCheck } from "react-icons/fa";
+
 
 const UserDashboardHome = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -44,14 +46,9 @@ const UserDashboardHome = () => {
       icon: <MdDashboard></MdDashboard>,
     },
     {
-      path: "/dashboard/product",
-      element: "Product",
-      icon: <FaBoxOpen></FaBoxOpen>,
-    },
-    {
-      path: "/dashboard/order",
-      element: "Order",
-      icon: <FaBasketShopping></FaBasketShopping>,
+      path: "/user/dashboard/bookings",
+      element: "Bookings",
+      icon: <FaCalendarCheck/>,
     },
     {
       path: "/",

@@ -10,7 +10,7 @@ const UpcomingBooking = () => {
       </div>
     );
   }
-  console.log(data);
+
   return (
     <div>
       <div className="overflow-x-auto h-[250px] bg-white p-2 rounded-lg overflow-y-auto">
