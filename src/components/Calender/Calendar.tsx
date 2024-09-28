@@ -147,8 +147,6 @@ const Calendar = () => {
     ) as HTMLDialogElement)!.close()!;
   };
 
-  console.log(selectBooking);
-
   return (
     <div className="bg-white p-2 md:p-4 lg:p-4 rounded-2xl">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Your Bookings</h2>

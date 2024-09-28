@@ -50,11 +50,11 @@ const DashboardHome = () => {
           <UpcomingBooking />
         </div>
       </div>
-      <div className=" flex justify-between gap-x-4 p-2 my-5 lg:px-5 w-full">
-        <div className="w-1/2">
+      <div className=" flex flex-col md:flex-col lg:flex-row justify-between gap-x-4 gap-y-4 p-2 my-5 lg:px-5 w-full">
+        <div className="w-full md:w-full lg:w-1/2">
           <Calendar></Calendar>
         </div>
-        <div className='w-1/2'>
+        <div className='w-full md:w-full lg:w-1/2'>
           <CheapestFacilityForYou></CheapestFacilityForYou>
         </div>
       </div>
