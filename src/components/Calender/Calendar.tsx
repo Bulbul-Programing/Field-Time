@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useUserAllBookingQuery } from "../../Redux/features/BookingManagement/BookingManagement";
 import { toast } from "sonner";
-import { TUpcomingBooking } from "../../Types/TUpcomingBooking";
 import { demoBookingData, TBookingModal } from "../../Types/TBookingModal";
 import { CiLocationOn } from "react-icons/ci";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
