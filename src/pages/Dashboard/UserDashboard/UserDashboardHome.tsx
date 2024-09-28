@@ -39,7 +39,7 @@ const UserDashboardHome = () => {
 
   const dashboardNavItem = [
     {
-      path: "/admin/dashboard/home",
+      path: "/user/dashboard/home",
       element: "Dashboard",
       icon: <MdDashboard></MdDashboard>,
     },

@@ -1,8 +1,8 @@
 import { baseApi } from "../../api/baseApi";
 
-const bookingManagementApi = baseApi.injectEndpoints({
+const facilityManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    userAllBooking: builder.query({
+    allFacility: builder.query({
       query: (args) => {
         const param = new URLSearchParams()
         if(args){
@@ -13,7 +13,7 @@ const bookingManagementApi = baseApi.injectEndpoints({
             }
         }
         return {
-          url: `/bookings/user`,
+          url: `/facility`,
           method: "GET",
           params : param
         };
@@ -31,4 +31,4 @@ const bookingManagementApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useUserAllBookingQuery , useRegisterUserMutation} = bookingManagementApi;
+export const { useAllFacilityQuery , useRegisterUserMutation} = facilityManagementApi;

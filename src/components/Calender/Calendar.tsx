@@ -90,7 +90,7 @@ const Calendar = () => {
       days.push(
         <div
           key={i}
-          className={`w-12 h-12 flex items-center justify-center rounded-lg shadow-md m-1 transition-all
+          className={` w-8 md:w-12 lg:w-12 h-8 md:h-12 lg:h-12 flex items-center justify-center rounded-lg shadow-md m-1 transition-all
           ${
             isBooked(day) && isPast
               ? "bg-gradient-to-r from-red-500 to-red-700 text-white"
@@ -144,17 +144,17 @@ const Calendar = () => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-2xl w-full">
+    <div className="bg-white p-2 md:p-4 lg:p-4 rounded-2xl">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Your Bookings</h2>
 
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={handlePreviousMonth}
-          className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-800"
+          className=" px-1 md:px-4 lg:px-4 py-2 text-xs md:text-base lg:text-base bg-gray-600 text-white rounded-md hover:bg-gray-800"
         >
           Previous Month
         </button>
-        <h3 className="text-xl font-semibold">
+        <h3 className=" text-base md:text-xl lg:text-xl font-semibold">
           {new Date(currentYear, currentMonth).toLocaleString("default", {
             month: "long",
             year: "numeric",
@@ -162,13 +162,13 @@ const Calendar = () => {
         </h3>
         <button
           onClick={handleNextMonth}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+          className="px-1 md:px-4 lg:px-4 py-2 text-xs md:text-base lg:text-base bg-blue-500 text-white rounded-md hover:bg-blue-700"
         >
           Next Month
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-lg">
+      <div className="bg-white p-3 md:p-6 lg:p-6 rounded-lg shadow-lg">
         <div className="grid grid-cols-7 gap-4">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((dayName) => (
             <div key={dayName} className="font-bold ml-3 text-gray-600">
