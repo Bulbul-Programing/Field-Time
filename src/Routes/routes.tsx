@@ -8,6 +8,7 @@ import DashboardHome from "../pages/Dashboard/UserDashboard/DashboardHome";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import UserDashboardHome from "../pages/Dashboard/UserDashboard/UserDashboardHome";
 import MyBooking from "../pages/Dashboard/UserDashboard/MyBooking";
+import Facility from "../pages/Facility/Facility";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       },
+      {
+        path : '/facility',
+        element : <Facility></Facility>
+      }
     ],
   },
   {

@@ -36,9 +36,9 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className="px-4 py-1 mr-2 rounded-sm text-[#34495E] hover:text-[#3498DB] font-bold font-[lato]"
-        to="/shop"
+        to="/facility"
       >
-        Shop
+        Facility
       </NavLink>
       {currentUser?.email && (
         <NavLink

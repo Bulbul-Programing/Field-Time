@@ -18,17 +18,19 @@ const bookingManagementApi = baseApi.injectEndpoints({
           params : param
         };
       },
+      providesTags : ['booking']
     }),
-    registerUser: builder.mutation({
+    updateBooking: builder.mutation({
       query: (args) => {
         return {
-          url: "/auth/signup",
-          method: "POST",
+          url: "/bookings/updateBooing",
+          method: "PUT",
           body: args,
         };
       },
+      invalidatesTags : ['booking']
     })
   }),
 });
 
-export const { useUserAllBookingQuery , useRegisterUserMutation} = bookingManagementApi;
+export const { useUserAllBookingQuery , useUpdateBookingMutation} = bookingManagementApi;

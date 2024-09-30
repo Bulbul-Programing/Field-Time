@@ -4,7 +4,7 @@ import { TFacility } from "../../../Types/TFacility";
 import { CiLocationOn } from "react-icons/ci";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 const CheapestFacilityForYou = () => {
-  const { data, isLoading } = useAllFacilityQuery({ limit: 5 , minValue : 1 , sort : 'pricePerHour'});
+  const { data, isLoading } = useAllFacilityQuery({ limit: 5 , sort : 'pricePerHour'});
   if (isLoading) {
     return (
       <div className="flex justify-center items-center">

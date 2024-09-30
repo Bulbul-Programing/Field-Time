@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
-import { useUserAllBookingQuery } from '../../../Redux/features/BookingManagement/BookingManagement';
-import { TBookingModal } from '../../../Types/TBookingModal';
+import React, { useEffect, useState } from 'react';
+import { useUpdateBookingMutation, useUserAllBookingQuery } from '../../../Redux/features/BookingManagement/BookingManagement';
+import { demoBookingData, TBookingModal } from '../../../Types/TBookingModal';
 import { CiLocationOn } from 'react-icons/ci';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
 import { IoMdTime } from 'react-icons/io';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { GrStatusGood } from 'react-icons/gr';
 import { RxCrossCircled } from 'react-icons/rx';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns"
+import { getTodayDate } from '../../../Utils/getTodayDate';
+import { toast } from 'sonner';
 
 const MyBooking = () => {
     const { data, isLoading } = useUserAllBookingQuery(undefined)
-    const [selectBooking, setSelectBooking] = useState<TBookingModal>()
+    const [selectBooking, setSelectBooking] = useState<TBookingModal>(demoBookingData)
     const [date, setDate] = useState<string>("");
-    const [time, setTime] = useState<string>("");
+    const [startTime, setStartTime] = useState<string>("");
+    const [endTime, setEndTime] = useState<string>("");
+    const today = getTodayDate()
+    const [updateStatus, setUpdateStatus] = useState(false)
+    const [updateBooking] = useUpdateBookingMutation()
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (date && startTime && endTime) {
+            setUpdateStatus(true)
+        }
+    }, [date, startTime, endTime])
+
 
     if (isLoading) {
         return (
@@ -33,18 +45,79 @@ const MyBooking = () => {
 
         if (isExistBooking) {
             setSelectBooking(isExistBooking),
-                (document.getElementById('my_modal_5') as HTMLDialogElement).showModal()
+                (document.getElementById('modalForUpdateBooking') as HTMLDialogElement).showModal()
         }
     }
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(e.target.value);
-  };
+    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDate(e.target.value);
+    };
 
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTime(e.target.value);
-  };
+    const handleTimeChange = (time: string, status: string) => {
+        if (status === 'startTime') {
+            setStartTime(time)
+        }
+        if (status === 'endTime') {
+            setEndTime(time)
+        }
+    }
 
+    const handleModalClose = () => {
+        (document.getElementById(
+            "modalForUpdateBooking"
+        ) as HTMLDialogElement)!.close()!;
+    }
+
+    const handleBookingUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+
+        e.preventDefault()
+        setLoading(true)
+        let updateInfo = {}
+
+        if (date && startTime && endTime) {
+            updateInfo = {
+                facility: selectBooking.facility._id,
+                _id: selectBooking._id,
+                date,
+                startTime,
+                endTime,
+                isBooked: e.currentTarget.status.value
+            }
+        }
+        else {
+            updateInfo = {
+                facility: selectBooking.facility._id,
+                _id: selectBooking._id,
+                isBooked: e.currentTarget.status.value
+            }
+        }
+
+        try {
+            const res = await updateBooking(updateInfo)
+
+            if (res?.data?.success) {
+                toast.success(`Booking update successfully`)
+                setStartTime('')
+                setEndTime('')
+                setDate('')
+                handleModalClose()
+            }
+
+            if (res?.error) {
+                toast.error(`${(res.error as any).data.message}`)
+                setStartTime('')
+                setEndTime('')
+                setDate('')
+            }
+        }
+        catch (err: any) {
+            console.log(err);
+            setStartTime('')
+            setEndTime('')
+            setDate('')
+            toast.error(`${err?.error?.data?.message}`)
+        }
+    }
 
     return (
         <div>
@@ -64,7 +137,7 @@ const MyBooking = () => {
                     <tbody>
                         {
                             data?.data?.map((booking: TBookingModal, index: number) => (
-                                <tr className='shadow-md mt-5'>
+                                <tr key={booking._id} className='shadow-md mt-5'>
                                     <th>
                                         {index + 1}
                                     </th>
@@ -150,47 +223,113 @@ const MyBooking = () => {
                 </table>
             </div>
             <div>
-                <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                <dialog id="modalForUpdateBooking" className="modal modal-bottom sm:modal-middle">
                     <div className="modal-box">
                         <div>
-                            <div className="flex flex-col gap-4 p-4 w-80">
-                                <label className="block text-gray-700 font-bold mb-2">
-                                    Select Date
-                                </label>
-                                <input
-                                    type="date"
-                                    value={date}
-                                    onChange={handleDateChange}
-                                    className="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Select Date"
-                                />
+                            <div>
+                                <h1 className="text-xl font-bold mb-3 text-center">Update Your Booking</h1>
+                                <div>
+                                    <img className="h-[250px] w-full rounded-lg" src={selectBooking?.facility.image} alt="" />
+                                    <h1 className="text-xl my-2 font-medium">{selectBooking.facility.name}</h1>
+                                    <p className="text-slate-700">{selectBooking.facility.description}</p>
+                                    <div className="grid grid-cols-2 justify-between items-center">
 
-                                <label className="block text-gray-700 font-bold mb-2">
-                                    Select Time
-                                </label>
-                                <input
-                                    type="time"
-                                    value={time}
-                                    onChange={handleTimeChange}
-                                    className="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Select Time"
-                                    step="60" // Allows selecting time with minute intervals
-                                />
+                                        <div className="flex items-center gap-x-1 mt-1 ml-1">
+                                            <FaCalendarAlt className="text-2xl text-blue-500"></FaCalendarAlt>
+                                            <p className="text-lg font-bold">{selectBooking.date}</p>
+                                        </div>
+                                        <div className="flex items-center gap-x-1 mt-1">
+                                            {
+                                                selectBooking.isBooked === 'confirmed' ? <GrStatusGood className="text-green-500 text-2xl" /> : <RxCrossCircled className="text-red-500 text-2xl" />
+                                            }
 
-                                <div className="mt-4">
-                                    <p className="text-gray-600">
-                                        Selected Date: <strong>{date || "None"}</strong>
-                                    </p>
-                                    <p className="text-gray-600">
-                                        Selected Time: <strong>{time || "None"}</strong>
-                                    </p>
+                                            <p className="font-medium">
+                                                Status {' '}
+                                                <span className={`text-lg font-bold ${selectBooking.isBooked === 'confirmed' ? 'text-green-500' : 'text-red-500'}`}>
+                                                    {selectBooking.isBooked}
+                                                </span>{" "}
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center gap-x-1 mt-3">
+                                            <IoMdTime className="text-2xl text-blue-500"></IoMdTime>
+                                            <p className="font-medium">
+                                                Start Time {' '}
+                                                <span className="text-lg font-bold text-green-600">
+                                                    {selectBooking.startTime}
+                                                </span>{" "}
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center gap-x-1 mt-1">
+                                            <IoMdTime className="text-2xl text-blue-500"></IoMdTime>
+                                            <p className="font-medium">
+                                                End Time {' '}
+                                                <span className="text-lg font-bold text-red-600">
+                                                    {selectBooking.endTime}
+                                                </span>{" "}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="modal-action">
-                            <form method="dialog">
-                                {/* if there is a button in form, it will close the modal */}
-                                <button className="btn">Close</button>
+
+                            <form onSubmit={handleBookingUpdate} className=" mt-5 pt-5 w-full border-t border-black">
+                                <label className='grid grid-cols-3 mb-3 justify-center gap-x-3 items-center'>
+                                    <label>
+                                        <label className="block text-gray-700 mb-2 text-xs md:text-sm lg:text-sm font-medium">
+                                            Select Date
+                                        </label>
+                                        <input
+                                            type="date"
+                                            value={date}
+                                            min={today}
+                                            defaultValue={selectBooking.date}
+
+                                            onChange={handleDateChange}
+                                            className="border border-gray-300 p-1 text-sm md:text-base lg:text-base w-full rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="Select Date"
+                                        />
+                                    </label>
+
+                                    <label>
+                                        <label htmlFor='startTime' className="block text-xs md:text-sm lg:text-sm text-gray-700 text-sm font-medium mb-2">
+                                            Select start Time
+                                        </label>
+                                        <input
+                                            type="time"
+                                            name='startTime'
+                                            onChange={(e) => handleTimeChange(e.target.value, 'startTime')}
+                                            className="border w-full border-gray-300 p-1 text-sm md:text-base lg:text-base rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="Select Start Time"
+                                            id='startTime'
+                                            step="60" // Allows selecting time with minute intervals
+                                        />
+                                    </label>
+                                    <label>
+                                        <label htmlFor='endTime' className="block text-xs md:text-sm lg:text-sm text-gray-700 text-sm font-medium mb-2">
+                                            Select end Time
+                                        </label>
+                                        <input
+                                            type="time"
+                                            placeholder='Select End time'
+                                            step='60'
+                                            className='border w-full border-gray-300 p-1 text-sm md:text-base lg:text-base rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+                                            name="endTime"
+                                            id='endTime'
+                                            onChange={(e) => handleTimeChange(e.target.value, 'endTime')}
+                                        />
+                                    </label>
+                                </label>
+                                <label htmlFor="status">Status</label>
+                                <select onChange={() => setUpdateStatus(true)} name="status" id="status" className="border border-gray-300 p-2 mt-1 w-full rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="confirmed">Confirmed</option>
+                                    <option value="canceled">Canceled</option>
+                                </select>
+                                <div className='flex items-center justify-end gap-x-2 mt-5'>
+                                    {
+                                        updateStatus ? <input type='submit' className='bg-[#3498DB] hover:bg-[#298cce] my-2 text-white btn ' value='Update Booking' /> : <input disabled className='text-black btn ' value='Update Booking' />
+                                    }
+                                    <input onClick={handleModalClose} className='btn w-20 bg-red-500 hover:bg-red-600 text-white' value='close' />
+                                </div>
                             </form>
                         </div>
                     </div>
