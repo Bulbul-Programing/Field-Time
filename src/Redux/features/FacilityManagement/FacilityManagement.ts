@@ -29,17 +29,16 @@ const facilityManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ['booking']
     }),
-
-    registerUser: builder.mutation({
-      query: (args) => {
+    facilityDetails: builder.query({
+      query: (id) => {
         return {
-          url: "/auth/signup",
-          method: "POST",
-          body: args,
+          url: `/facility/details/${id}`,
+          method: "GET",
         };
       },
-    })
+      providesTags: ['booking']
+    }),
   }),
 });
 
-export const { useAllFacilityQuery, useRegisterUserMutation, useFacilityLengthQuery } = facilityManagementApi;
+export const { useAllFacilityQuery, useFacilityLengthQuery, useFacilityDetailsQuery } = facilityManagementApi;

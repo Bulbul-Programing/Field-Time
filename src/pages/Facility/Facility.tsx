@@ -1,15 +1,10 @@
 import { useAllFacilityQuery, useFacilityLengthQuery } from "../../Redux/features/FacilityManagement/FacilityManagement";
 import { TFacility } from "../../Types/TFacility";
-import { CiLocationOn } from 'react-icons/ci';
-import { FaMoneyBill1Wave } from 'react-icons/fa6';
-import { IoMdTime } from 'react-icons/io';
-import { FaCalendarAlt, FaSearch } from 'react-icons/fa';
-import { GrStatusGood } from 'react-icons/gr';
-import { RxCrossCircled } from 'react-icons/rx';
-import { Link, Search } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useDebounce } from "../../Hooks/Debounce/Debounce";
+import { FaSearch } from "react-icons/fa";
 
 export type TFilter = {
   searchTerm?: string;
@@ -37,7 +32,6 @@ const Facility = () => {
   const { data : dataForPagination, isLoading : isLoadingTwo} = useFacilityLengthQuery(undefined)
 
   useEffect(() => {
-    console.log(debounceValue);
     if (debounceValue.searchTerm) {
       setSortFelid({ ...sortFelid, searchTerm: debounceValue?.searchTerm })
     }
@@ -135,7 +129,6 @@ const Facility = () => {
       setSortFelid({ ...sortFelid, page: 1, limit: parseInt(e.target.value) });
     setItemPerPage(parseInt(e.target.value));
   };
-  console.log(itemPerPage, currentPage);
   return (
     <div className="">
       <div className=" bg-cover bg-center bg-no-repeat bg-[url('https://res.cloudinary.com/depy0i4bl/image/upload/v1727635027/image8s20_q5xpfq.jpg')]">
@@ -527,7 +520,6 @@ const Facility = () => {
               </ul>
             </div>
             <div className="my-3">
-              {/* <h1 className="text-center text-lg font-medium">Price Filter</h1> */}
               <form action="" onSubmit={handleMinMax} className=" flex space-x-5">
                 <input
                   type="number"
@@ -568,7 +560,7 @@ const Facility = () => {
           </div> : <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-5 md:m-5 lg:m-10">
             {
               data?.data?.map((facility: TFacility) => (
-                <Link to={`/facility/details/${facility._id}`} className="bg-slate-100 hover:outline outline-blue-400 cursor-pointer rounded-lg">
+                <Link key={facility._id} to={`/facilityDetails/${facility._id}`} className="bg-slate-100 hover:outline outline-blue-400 cursor-pointer rounded-lg">
                   <img className="w-full rounded-lg h-[150px] md:h-[220px] lg:h-[300px]" src={facility.image} alt="" />
                   <div className="">
                     <div className="flex gap-x-1 items-center bg-gradient-to-r rounded-tr-full rounded-br-full text-white px-3 from-blue-500 to-[#5a9cf3] w-36 md:w-40 lg:w-40 my-3 py-1">
@@ -597,7 +589,7 @@ const Facility = () => {
               onClick={() => handlePagination(page + 1)}
               key={page}
               className={`btn ${page + 1 === currentPage &&
-                "bg-[#8FBC8F] hover:bg-[#689968] text-white"
+                "bg-[#5a9cf3] hover:bg-[#468eed] text-white"
                 }`}
             >
               {page + 1}
@@ -607,7 +599,7 @@ const Facility = () => {
             Next
           </button>
           <div className="flex items-center space-x-4">
-            <p className="text-lg font-medium ml-5 text-[#8FBC8F]">
+            <p className="text-lg font-medium ml-5 text-[#5a9cf3]">
               Page pre view
             </p>
             <select

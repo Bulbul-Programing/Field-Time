@@ -48,7 +48,7 @@ const CheapestFacilityForYou = () => {
             </div>
             <Link
               className="bg-[#3498DB] hover:bg-[#E67E22] my-2 text-white btn w-full md:w-28 lg:w-24 btn-md md:btn-md lg:btn-sm"
-              to={""}
+              to={`/facilityBooking/${facility._id}`}
             >
               Book now
             </Link>

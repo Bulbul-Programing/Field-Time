@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { NavLink, Outlet } from "react-router-dom";
-import { FaBasketShopping } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
-import { FaBoxOpen } from "react-icons/fa";
-import { FaHome } from "react-icons/fa";
 import { useAppSelector } from "../../../Redux/hooks";
 import { TUser, useCurrentToken } from "../../../Redux/features/Auth/authSlice";
-import { RootState } from "../../../Redux/store";
 import { useUserInfoQuery } from "../../../Redux/features/Users/userManagementApi";
 import { verifyToken } from "../../../Utils/veryfyToken";
+import { FaCalendarCheck } from "react-icons/fa";
 
 const AdminDashboardHome = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -44,20 +41,10 @@ const AdminDashboardHome = () => {
       icon: <MdDashboard></MdDashboard>,
     },
     {
-      path: "/dashboard/product",
-      element: "Product",
-      icon: <FaBoxOpen></FaBoxOpen>,
-    },
-    {
-      path: "/dashboard/order",
-      element: "Order",
-      icon: <FaBasketShopping></FaBasketShopping>,
-    },
-    {
-      path: "/",
-      element: "Home",
-      icon: <FaHome></FaHome>,
-    },
+      path : '/admin/dashboard/booking',
+      element : 'Booking',
+      icon : <FaCalendarCheck/>,
+    }
   ];
 
   return (

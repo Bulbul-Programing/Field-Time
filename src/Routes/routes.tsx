@@ -9,6 +9,9 @@ import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import UserDashboardHome from "../pages/Dashboard/UserDashboard/UserDashboardHome";
 import MyBooking from "../pages/Dashboard/UserDashboard/MyBooking";
 import Facility from "../pages/Facility/Facility";
+import FacilityDetails from "../pages/Facility/FacilityDetails";
+import Booking from "../pages/Booking/Booking";
+import Dashboard from "../pages/Dashboard/AdminDashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +25,15 @@ const router = createBrowserRouter([
       {
         path : '/facility',
         element : <Facility></Facility>
-      }
+      },
+      {
+        path : '/facilityDetails/:id',
+        element : <FacilityDetails></FacilityDetails>
+      },
+      {
+        path : '/facilityBooking/:id',
+        element : <Booking></Booking>
+      },
     ],
   },
   {
@@ -35,7 +46,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin/dashboard/home",
-        element: <DashboardHome />,
+        element: <Dashboard />,
       },
     ],
   },

@@ -83,12 +83,10 @@ const Register = () => {
     toast.error('something went wrong!', {id : toastId, duration : 2000})
    }
   }
-  const handleGoogleLogin = () => {
-  }
 
   return (
-    <div className="bg-center bg-cover bg-[url('https://res.cloudinary.com/depy0i4bl/image/upload/v1727099505/mitch-rosen-g9SNY0aLMF0-unsplash_1_1_qigu2z.jpg')]">
-      <div className="bg-black/60 w-full flex items-center justify-center h-screen">
+    <div className="bg-center bg-contain bg-[url('https://res.cloudinary.com/depy0i4bl/image/upload/v1727099505/mitch-rosen-g9SNY0aLMF0-unsplash_1_1_qigu2z.jpg')]">
+      <div className="bg-black/60 w-full flex items-center justify-center py-10">
         <div className="backdrop-blur-lg border border-white bg-blue-500 bg-opacity-10 text-white p-5 rounded-lg shadow-lg w-96">
           <h1 className="text-2xl font-semibold mb-2 text-center text-[#ffffff]">
             Register
@@ -118,13 +116,6 @@ const Register = () => {
             <p className="px-2 text-sm text-white">OR</p>
             <div className="border-b border-gray-300 w-full"></div>
           </div>
-
-          <div className="text-3xl text-[#3498DB] flex justify-center my-3">
-            <button onClick={handleGoogleLogin} className="cursor-pointer">
-              <FaGoogle />
-            </button>
-          </div>
-
           <p className="mt-4 text-center text-sm text-[#ffffff]">
             Don't have an account?{" "}
             <Link to="/login" className="text-[#3498DB] hover:underline">

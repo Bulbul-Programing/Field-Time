@@ -41,11 +41,6 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    // Trigger Google login logic here
-    console.log("Google Login Triggered");
-  };
-
   return (
     <div className=" bg-center bg-cover bg-[url('https://res.cloudinary.com/depy0i4bl/image/upload/v1727099505/mitch-rosen-g9SNY0aLMF0-unsplash_1_1_qigu2z.jpg')]">
       <div className="bg-black/60 w-full flex items-center justify-center h-screen">
@@ -68,12 +63,6 @@ const Login = () => {
             <div className="border-b border-gray-300 w-full"></div>
             <p className="px-2 text-sm text-white">OR</p>
             <div className="border-b border-gray-300 w-full"></div>
-          </div>
-
-          <div className="text-3xl text-[#3498DB] flex justify-center my-3">
-            <button onClick={handleGoogleLogin} className="cursor-pointer">
-              <FaGoogle />
-            </button>
           </div>
 
           <p className="mt-4 text-center text-sm text-[#ffffff]">
