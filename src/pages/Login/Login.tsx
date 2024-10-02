@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../../Redux/hooks";
 import { setUser } from "../../Redux/features/Auth/authSlice";
-import { FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../../Redux/features/Users/userManagementApi";
 import { toast } from "sonner";
 import { verifyToken } from "../../Utils/veryfyToken";
@@ -13,6 +12,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const [loginUser] = useLoginUserMutation()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const Login = () => {
       setLoading(true)
       const verifyUser = verifyToken(res?.token)
       dispatch(setUser({user : verifyUser, token : res?.token}))
-      navigate('/')
+      navigate(location?.state ? location.state : '/')
       toast.success('User Login successfully', {id : toastId, duration : 2000})
       setLoading(false)
     }
@@ -67,7 +67,7 @@ const Login = () => {
 
           <p className="mt-4 text-center text-sm text-[#ffffff]">
             Don't have an account?{" "}
-            <Link to="/register" className="text-[#3498DB] hover:underline">
+            <Link state={location.state} to="/register" className="text-[#3498DB] hover:underline">
               Register here
             </Link>
           </p>

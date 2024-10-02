@@ -5,7 +5,7 @@ const userManagementApi = baseApi.injectEndpoints({
     isUserExist: builder.query({
       query: (args) => {
         return {
-          url: `/auth/signup/isExistUser/${args}`,
+          url: `/auth/isExistUser/${args}`,
           method: "GET",
         };
       },
@@ -36,8 +36,15 @@ const userManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
-
+    getAllUser: builder.query({
+      query: (role) => {
+        return {
+          url: `/auth/userRole/${role}`,
+          method : "GET",
+        }
+      }
+    })
   }),
 });
 
-export const { useIsUserExistQuery , useRegisterUserMutation, useLoginUserMutation, useUserInfoQuery} = userManagementApi;
+export const { useIsUserExistQuery, useGetAllUserQuery, useRegisterUserMutation, useLoginUserMutation, useUserInfoQuery } = userManagementApi;

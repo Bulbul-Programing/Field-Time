@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useLoginUserMutation, useRegisterUserMutation } from "../../Redux/features/Users/userManagementApi";
 import { verifyToken } from "../../Utils/veryfyToken";
@@ -15,6 +14,8 @@ const Register = () => {
   const [loginUser] = useLoginUserMutation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
+
 
   const handleSubmit = async(e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -26,7 +27,7 @@ const Register = () => {
     const phone = target.phone.value
     const address = target.address.value
     const profileImageFile = target.profileImage.files
-
+    
     if(password.length < 8){
       return toast.error('Please Provide minimum 8 character password!')
     }
@@ -37,7 +38,7 @@ const Register = () => {
 
     // checking user exist or not
     setLoading(true)
-    const res = await axios.get(`http://localhost:5000/api/auth/signup/isExistUser/${email}`)
+    const res = await axios.get(`https://level-two-assignment-three-omega.vercel.app/api/auth/isExistUser/${email}`)
     
 
     let profileImage;
@@ -45,7 +46,6 @@ const Register = () => {
     if(profileImageFile.length > 0){
       const res = await hostSingleImage(profileImageFile)
       profileImage = res[0]
-      setLoading(false)
     }
 
     const toastId = toast.loading('Register in');
@@ -74,7 +74,8 @@ const Register = () => {
       const res = await loginUser(loginData)
       const verifyUser = verifyToken(res?.data?.token)
       dispatch(setUser({user :verifyUser, token : res?.data?.token}))
-      navigate('/')
+      navigate(location?.state ? location.state : '/')
+      setLoading(false)
       toast.success('User register successfully', {id : toastId, duration : 2000})
     }
    }

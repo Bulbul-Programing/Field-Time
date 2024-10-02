@@ -6,15 +6,15 @@ import { useAppSelector } from "../../../Redux/hooks";
 import { TUser, useCurrentToken } from "../../../Redux/features/Auth/authSlice";
 import { useUserInfoQuery } from "../../../Redux/features/Users/userManagementApi";
 import { verifyToken } from "../../../Utils/veryfyToken";
-import { FaCalendarCheck } from "react-icons/fa";
+import { FaCalendarCheck, FaFootballBall, FaHome, FaUsers, FaUserTie } from "react-icons/fa";
 
 const AdminDashboardHome = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const token = useAppSelector(useCurrentToken);
   const verifyUser = verifyToken(token || '') as TUser;
-  const { data: userInfo, isLoading } = useUserInfoQuery(verifyUser?.email, {skip : !token });
-  
+  const { data: userInfo, isLoading } = useUserInfoQuery(verifyUser?.email, { skip: !token });
+
   const handleMouseEnter = () => {
     setIsExpanded(true);
   };
@@ -41,11 +41,37 @@ const AdminDashboardHome = () => {
       icon: <MdDashboard></MdDashboard>,
     },
     {
-      path : '/admin/dashboard/booking',
-      element : 'Booking',
-      icon : <FaCalendarCheck/>,
-    }
+      path: '/admin/dashboard/facility',
+      element: 'Facility',
+      icon: <FaFootballBall />,
+    },
+    {
+      path: '/admin/dashboard/booking',
+      element: 'Booking',
+      icon: <FaCalendarCheck />,
+    },
+    {
+      path: '/admin/dashboard/admin',
+      element: 'Admins',
+      icon: <FaUserTie />,
+    },
+    {
+      path: '/admin/dashboard/user',
+      element: 'Users',
+      icon: <FaUsers />,
+    },
+    {
+      path: '/',
+      element: 'Home',
+      icon: <FaHome />,
+    },
   ];
+
+  if (isLoading) {
+    return <div className="flex justify-center items-center">
+      <span className="loading loading-dots loading-md"></span>
+    </div>
+  }
 
   return (
     <div className="relative max-w-7xl mx-auto">
@@ -63,11 +89,9 @@ const AdminDashboardHome = () => {
       )}
 
       <div
-        className={`fixed top-0 left-0 h-screen bg-[#f1f2f7] text-black transition-all duration-300 ease-in-out transform ${
-          isExpanded ? "w-48" : "w-16"
-        } ${
-          isDrawerOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        } z-30`}
+        className={`fixed top-0 left-0 h-screen bg-[#f1f2f7] text-black transition-all duration-300 ease-in-out transform ${isExpanded ? "w-48" : "w-16"
+          } ${isDrawerOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          } z-30`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -79,17 +103,15 @@ const AdminDashboardHome = () => {
             <NavLink
               to={item.path}
               key={index}
-              className={`flex gap-x-4 mb-4 ${
-                isExpanded ? "justify-start" : "justify-center"
-              } items-center hover:bg-[#707fdd] hover:text-white p-2 m-2 hover:rounded-md`}
+              className={`flex gap-x-4 mb-4 ${isExpanded ? "justify-start" : "justify-center"
+                } items-center hover:bg-[#707fdd] hover:text-white p-2 m-2 hover:rounded-md`}
             >
               <div className=" text-xl md:text-2xl lg:text-2xl">
                 {item.icon}
               </div>
               <p
-                className={`text-lg mt-1 transition-opacity duration-300 ease-in-out ${
-                  isExpanded ? "block" : "hidden"
-                }`}
+                className={`text-lg mt-1 transition-opacity duration-300 ease-in-out ${isExpanded ? "block" : "hidden"
+                  }`}
               >
                 {item.element}
               </p>
@@ -97,7 +119,7 @@ const AdminDashboardHome = () => {
           ))}
         </div>
       </div>
-     
+
       <div className="bg-slate-100 p-2 md:p-2 lg:pl-20 pt-5">
         <Outlet></Outlet>
       </div>

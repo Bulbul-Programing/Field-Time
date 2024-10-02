@@ -38,7 +38,7 @@ const DashboardHome = () => {
               className="btn bg-[#3498DB] hover:bg-[#E67E22] text-white"
             >
               Book now
-            </Link>
+            </Link> 
           </div>
           <img
             className="w-1/2"

@@ -1,7 +1,4 @@
 import React from "react";
-import { useInView } from "react-intersection-observer";
-import clsx from "clsx";
-
 // Step details with images
 const steps = [
     {

@@ -71,6 +71,10 @@ const Navbar = () => {
     toast.success("Log out success");
   };
 
+  if(isLoading){
+    return ''
+  }
+
   return (
     <div
       className={`sticky top-0 z-10 transition duration-500 ${
@@ -120,7 +124,7 @@ const Navbar = () => {
         <div className="flex items-center gap-x-4">
           {userInfo?.data?.profileImage && (
             <img
-              className="w-10 rounded-full border"
+              className="w-10 h-10 rounded-full border"
               src={userInfo?.data?.profileImage}
               alt=""
             />

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "sonner";
 
 export const hostSingleImage = async (imageData: File[]) => {
   const url = `https://api.cloudinary.com/v1_1/depy0i4bl/image/upload`;

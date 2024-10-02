@@ -1,4 +1,4 @@
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useFacilityDetailsQuery } from '../../Redux/features/FacilityManagement/FacilityManagement';
 import { useEffect, useState } from 'react';
 import { useCheckAvailabilityQuery, useCreateBookingMutation } from '../../Redux/features/BookingManagement/BookingManagement';
@@ -218,7 +218,7 @@ const Booking = () => {
 
                             <div className='flex items-center justify-end gap-x-2 mt-5'>
                                 {
-                                    updateStatus ? <input type='submit' className='bg-[#3498DB] hover:bg-[#298cce] my-2 text-white btn ' value='Update Booking' /> : <input disabled className='text-black btn ' value='Update Booking' />
+                                    updateStatus ? loading ? <span className="loading loading-dots loading-md"></span> : <input type='submit' className='bg-[#3498DB] hover:bg-[#298cce] my-2 text-white btn ' value='Confirm Booking' /> : <input disabled className='text-black btn ' value='Update Booking' />
                                 }
                                 <input onClick={handleModalClose} className='btn w-20 bg-red-500 hover:bg-red-600 text-white' value='close' />
                             </div>

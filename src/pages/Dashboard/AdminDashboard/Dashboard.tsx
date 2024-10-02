@@ -3,7 +3,6 @@ import { TUser, useCurrentToken } from "../../../Redux/features/Auth/authSlice";
 import { verifyToken } from "../../../Utils/veryfyToken";
 import { useUserInfoQuery } from "../../../Redux/features/Users/userManagementApi";
 import { Link } from "react-router-dom";
-import Calendar from "../../../components/Calender/Calendar";
 import LatestBooking from "./LatestBooking";
 
 const Dashboard = () => {
@@ -22,8 +21,8 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="">
-      <div className=" flex flex-col md:flex-col lg:flex-row gap-5 items-center md:m-2 lg:mx-5">
+    <div className="md:m-2 lg:mx-5">
+      <div className=" flex flex-col md:flex-col lg:flex-row gap-5 items-center ">
         <div className="w-full md:w-full lg:w-1/2 h-[250px] flex justify-center items-center border bg-white p-4 rounded-lg">
           <div className="w-1/2 space-y-3">
             <h1 className="text-2xl font-bold">
@@ -36,7 +35,7 @@ const Dashboard = () => {
               to="/facility"
               className="btn bg-[#3498DB] hover:bg-[#E67E22] text-white"
             >
-              Book now
+              Add Facility
             </Link>
           </div>
           <img

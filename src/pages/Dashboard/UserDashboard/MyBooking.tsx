@@ -100,6 +100,8 @@ const MyBooking = () => {
                 setStartTime('')
                 setEndTime('')
                 setDate('')
+                setLoading(false)
+                setUpdateStatus(false)
                 handleModalClose()
             }
 
@@ -107,6 +109,8 @@ const MyBooking = () => {
                 toast.error(`${(res.error as any).data.message}`)
                 setStartTime('')
                 setEndTime('')
+                setLoading(false)
+                setUpdateStatus(false)
                 setDate('')
             }
         }
@@ -115,6 +119,8 @@ const MyBooking = () => {
             setStartTime('')
             setEndTime('')
             setDate('')
+            setUpdateStatus(false)
+            setLoading(false)
             toast.error(`${err?.error?.data?.message}`)
         }
     }
@@ -325,8 +331,9 @@ const MyBooking = () => {
                                     <option value="canceled">Canceled</option>
                                 </select>
                                 <div className='flex items-center justify-end gap-x-2 mt-5'>
+                                    
                                     {
-                                        updateStatus ? <input type='submit' className='bg-[#3498DB] hover:bg-[#298cce] my-2 text-white btn ' value='Update Booking' /> : <input disabled className='text-black btn ' value='Update Booking' />
+                                        updateStatus ? loading ? <span className="loading loading-dots loading-md"></span> : <input type='submit' className='bg-[#3498DB] hover:bg-[#298cce] my-2 text-white btn ' value='Update Booking' /> : <input disabled className='text-black btn ' value='Update Booking' />
                                     }
                                     <input onClick={handleModalClose} className='btn w-20 bg-red-500 hover:bg-red-600 text-white' value='close' />
                                 </div>

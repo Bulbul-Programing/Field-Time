@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { NavLink, Outlet } from "react-router-dom";
-import { FaBasketShopping } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
-import { FaBoxOpen } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { useAppSelector } from "../../../Redux/hooks";
 import { TUser, useCurrentToken } from "../../../Redux/features/Auth/authSlice";
-import { RootState } from "../../../Redux/store";
 import { useUserInfoQuery } from "../../../Redux/features/Users/userManagementApi";
 import { verifyToken } from "../../../Utils/veryfyToken";
 import { FaCalendarCheck } from "react-icons/fa";
@@ -18,8 +15,8 @@ const UserDashboardHome = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const token = useAppSelector(useCurrentToken);
   const verifyUser = verifyToken(token || '') as TUser;
-  const { data: userInfo, isLoading } = useUserInfoQuery(verifyUser?.email, {skip : !token });
-  
+  const { data: userInfo, isLoading } = useUserInfoQuery(verifyUser?.email, { skip: !token });
+
   const handleMouseEnter = () => {
     setIsExpanded(true);
   };
@@ -48,7 +45,7 @@ const UserDashboardHome = () => {
     {
       path: "/user/dashboard/bookings",
       element: "Bookings",
-      icon: <FaCalendarCheck/>,
+      icon: <FaCalendarCheck />,
     },
     {
       path: "/",
@@ -56,6 +53,12 @@ const UserDashboardHome = () => {
       icon: <FaHome></FaHome>,
     },
   ];
+
+  if (isLoading) {
+    return <div className="flex justify-center items-center">
+      <span className="loading loading-dots loading-md"></span>
+    </div>
+  }
 
   return (
     <div className="max-w-7xl relative mx-auto  flex flex-col md:flex-col lg:flex-row">
@@ -73,11 +76,9 @@ const UserDashboardHome = () => {
       )}
 
       <div
-        className={`absolute top-0 left-0 h-screen lg:block bg-[#f1f2f7] text-black transition-all duration-300 ease-in-out transform ${
-          isExpanded ? "w-48 block" : "w-16 hidden"
-        } ${
-          isDrawerOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        } z-30`}
+        className={`absolute top-0 left-0 h-screen lg:block bg-[#f1f2f7] text-black transition-all duration-300 ease-in-out transform ${isExpanded ? "w-48 block" : "w-16 hidden"
+          } ${isDrawerOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          } z-30`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -89,17 +90,15 @@ const UserDashboardHome = () => {
             <NavLink
               to={item.path}
               key={index}
-              className={`flex gap-x-4 mb-4 ${
-                isExpanded ? "justify-start" : "justify-center"
-              } items-center hover:bg-[#707fdd] hover:text-white p-2 m-2 hover:rounded-md`}
+              className={`flex gap-x-4 mb-4 ${isExpanded ? "justify-start" : "justify-center"
+                } items-center hover:bg-[#707fdd] hover:text-white p-2 m-2 hover:rounded-md`}
             >
               <div className=" text-xl md:text-2xl lg:text-2xl">
                 {item.icon}
               </div>
               <p
-                className={`text-lg mt-1 transition-opacity duration-300 ease-in-out ${
-                  isExpanded ? "block" : "hidden"
-                }`}
+                className={`text-lg mt-1 transition-opacity duration-300 ease-in-out ${isExpanded ? "block" : "hidden"
+                  }`}
               >
                 {item.element}
               </p>
@@ -107,7 +106,7 @@ const UserDashboardHome = () => {
           ))}
         </div>
       </div>
-     
+
       <div className="bg-slate-100 lg:ml-16 px-6 p-2 md:p-2 pt-5">
         <Outlet></Outlet>
       </div>

@@ -12,6 +12,10 @@ import Facility from "../pages/Facility/Facility";
 import FacilityDetails from "../pages/Facility/FacilityDetails";
 import Booking from "../pages/Booking/Booking";
 import Dashboard from "../pages/Dashboard/AdminDashboard/Dashboard";
+import AllBooking from "../pages/Dashboard/AdminDashboard/AllBooking";
+import AllUsers from "../pages/Dashboard/AdminDashboard/AllUsers";
+import Admin from "../pages/Dashboard/AdminDashboard/Admin";
+import AdminFacility from "../pages/Dashboard/AdminDashboard/AdminFacility";
 
 const router = createBrowserRouter([
   {
@@ -32,12 +36,12 @@ const router = createBrowserRouter([
       },
       {
         path : '/facilityBooking/:id',
-        element : <Booking></Booking>
+        element : <ProtectedRoute role='user'><Booking></Booking></ProtectedRoute>
       },
     ],
   },
   {
-    path: "/admin/dashboard/home",
+    path: "/admin/dashboard",
     element: (
       <ProtectedRoute role="admin">
         <AdminDashboardHome />
@@ -47,6 +51,22 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard/home",
         element: <Dashboard />,
+      },
+      {
+        path: "/admin/dashboard/facility",
+        element: <AdminFacility />,
+      },
+      {
+        path: "/admin/dashboard/booking",
+        element: <AllBooking />,
+      },
+      {
+        path: "/admin/dashboard/admin",
+        element: <Admin />,
+      },
+      {
+        path: "/admin/dashboard/user",
+        element: <AllUsers />,
       },
     ],
   },
