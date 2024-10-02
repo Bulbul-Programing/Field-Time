@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGetAllUserQuery } from '../../../Redux/features/Users/userManagementApi';
 
 const AllUsers = () => {

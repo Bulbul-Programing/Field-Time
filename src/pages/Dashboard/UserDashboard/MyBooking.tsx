@@ -297,7 +297,7 @@ const MyBooking = () => {
                                     </label>
 
                                     <label>
-                                        <label htmlFor='startTime' className="block text-xs md:text-sm lg:text-sm text-gray-700 text-sm font-medium mb-2">
+                                        <label htmlFor='startTime' className="block text-xs md:text-sm lg:text-sm text-gray-700 font-medium mb-2">
                                             Select start Time
                                         </label>
                                         <input
@@ -311,7 +311,7 @@ const MyBooking = () => {
                                         />
                                     </label>
                                     <label>
-                                        <label htmlFor='endTime' className="block text-xs md:text-sm lg:text-sm text-gray-700 text-sm font-medium mb-2">
+                                        <label htmlFor='endTime' className="block text-xs md:text-sm lg:text-sm text-gray-700 font-medium mb-2">
                                             Select end Time
                                         </label>
                                         <input

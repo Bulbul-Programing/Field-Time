@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useAllFacilityQuery, useCreateFacilityMutation, useUpdateFacilityMutation } from "../../../Redux/features/FacilityManagement/FacilityManagement";
+import { useAllFacilityQuery, useCreateFacilityMutation, useDeleteFacilityMutation, useUpdateFacilityMutation } from "../../../Redux/features/FacilityManagement/FacilityManagement";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import { TFacility } from "../../../Types/TFacility";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { toast } from "sonner";
 import { hostSingleImage } from "../../../Utils/ImageUpload";
+import Swal from 'sweetalert2'
 
 const AdminFacility = () => {
     const { data, isLoading } = useAllFacilityQuery(undefined)
@@ -15,10 +16,40 @@ const AdminFacility = () => {
     const [updateFacilityImage, setUpdateFacilityImage] = useState<File | any>()
     const [createFacility] = useCreateFacilityMutation()
     const [updateFacility] = useUpdateFacilityMutation()
+    const [deleteFacility] = useDeleteFacilityMutation()
     const [loading, setLoading] = useState(false)
 
-    const handleDelete = (id: string) => {
-        // Logic for deleting facility
+    const handleDelete = async (id: string) => {
+        console.log(id);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await deleteFacility(id)
+                    if (res?.data?.success) {
+                        toast.success(`${res?.data?.massage}`)
+                        setLoading(false),
+                            (document.getElementById("modalForUpdateFacility") as HTMLDialogElement)!.close()!
+                    }
+                    if (res?.error) {
+                        (res.error as any).data.errorSources.map((err: any) => (
+                            toast.error(`${err.message}`)
+                        ))
+                        setLoading(false)
+                    }
+                } catch (err: any) {
+                    console.log(err);
+                    setLoading(false)
+                }
+            }
+        });
     };
 
     const handleCreateFacility = async (e: React.FormEvent<HTMLFormElement>) => {

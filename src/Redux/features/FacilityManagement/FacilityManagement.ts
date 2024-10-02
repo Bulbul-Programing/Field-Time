@@ -58,8 +58,17 @@ const facilityManagementApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: ['facility']
+    }),
+    deleteFacility : builder.mutation({
+      query : (arg) =>{
+        return {
+          url : `/facility/${arg}`,
+          method : 'DELETE'
+        }
+      },
+      invalidatesTags: ['facility']
     })
   }),
 });
 
-export const { useAllFacilityQuery, useFacilityLengthQuery, useFacilityDetailsQuery , useCreateFacilityMutation, useUpdateFacilityMutation} = facilityManagementApi;
+export const { useAllFacilityQuery,useDeleteFacilityMutation, useFacilityLengthQuery, useFacilityDetailsQuery , useCreateFacilityMutation, useUpdateFacilityMutation} = facilityManagementApi;

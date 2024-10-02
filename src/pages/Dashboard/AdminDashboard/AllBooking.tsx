@@ -1,4 +1,3 @@
-import { MdDelete, MdEdit } from 'react-icons/md';
 import { useAdminAllBookingQuery } from '../../../Redux/features/BookingManagement/BookingManagement';
 import { TBooking } from '../../../Types/TBooking';
 
