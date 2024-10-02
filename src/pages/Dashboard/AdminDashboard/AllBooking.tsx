@@ -3,8 +3,14 @@ import { useAdminAllBookingQuery } from '../../../Redux/features/BookingManageme
 import { TBooking } from '../../../Types/TBooking';
 
 const AllBooking = () => {
-    const { data } = useAdminAllBookingQuery(undefined)
-    console.log(data);
+    const { data , isLoading} = useAdminAllBookingQuery(undefined)
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center">
+                <span className="loading loading-dots loading-md"></span>
+            </div>
+        );
+    }
     return (
         <div>
             <button className='text-3xl bg-white px-4 rounded-lg py-2 font-semibold '>Total Booking <span className='font-bold text-blue-500'>{data?.data?.length}</span></button>

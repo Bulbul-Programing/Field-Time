@@ -18,7 +18,7 @@ const facilityManagementApi = baseApi.injectEndpoints({
           params: param
         };
       },
-      providesTags: ['booking']
+      providesTags: ['facility']
     }),
     facilityLength: builder.query({
       query: () => {
@@ -35,10 +35,31 @@ const facilityManagementApi = baseApi.injectEndpoints({
           url: `/facility/details/${id}`,
           method: "GET",
         };
-      },
-      providesTags: ['booking']
+      }
     }),
+    createFacility : builder.mutation({
+      query : (args) => {
+        
+        return {
+          url : '/facility',
+          method : "POST",
+          body : args
+        }
+      },
+      invalidatesTags: ['facility']
+    }),
+    updateFacility : builder.mutation({
+      query : (args) => {
+        
+        return {
+          url : `/facility/${args.id}`,
+          method : "PUT",
+          body : args.data
+        }
+      },
+      invalidatesTags: ['facility']
+    })
   }),
 });
 
-export const { useAllFacilityQuery, useFacilityLengthQuery, useFacilityDetailsQuery } = facilityManagementApi;
+export const { useAllFacilityQuery, useFacilityLengthQuery, useFacilityDetailsQuery , useCreateFacilityMutation, useUpdateFacilityMutation} = facilityManagementApi;
