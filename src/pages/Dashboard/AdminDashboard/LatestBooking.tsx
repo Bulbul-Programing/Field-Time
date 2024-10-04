@@ -1,4 +1,4 @@
-import { FaCalendarAlt, FaPhone } from 'react-icons/fa';
+import { FaCalendarAlt } from 'react-icons/fa';
 import { useAdminAllBookingQuery } from '../../../Redux/features/BookingManagement/BookingManagement';
 import { TBooking } from '../../../Types/TBooking';
 import { FaPhoneAlt } from "react-icons/fa";

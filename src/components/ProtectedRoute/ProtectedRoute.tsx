@@ -16,14 +16,21 @@ type TProtectRoute = {
 const ProtectedRoute = ({ children, role }: TProtectRoute) => {
   const token = useAppSelector(useCurrentToken);
   const dispatch = useAppDispatch();
-  const location = useLocation()
+  const location = useLocation();
+
   if (!token) {
     return <Navigate state={location.pathname} to="/login" replace={true} />;
   }
 
   let user;
   if (token) {
-    user = verifyToken(token) as TUser;
+    const verifyUser = verifyToken(token) as TUser;
+    user = verifyUser;
+    // verify user token is expired or not
+    if (Date.now() >= verifyUser?.exp * 1000) {
+      dispatch(logout());
+      return <Navigate state={location.pathname} to="/login" replace={true} />;
+    }
   }
 
   if (role !== undefined && role !== user?.role) {
@@ -31,8 +38,7 @@ const ProtectedRoute = ({ children, role }: TProtectRoute) => {
     return <Navigate state={location.pathname} to="/login" replace={true} />;
   }
 
-  return children
-
+  return children;
 };
 
 export default ProtectedRoute;

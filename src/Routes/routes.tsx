@@ -16,6 +16,8 @@ import AllBooking from "../pages/Dashboard/AdminDashboard/AllBooking";
 import AllUsers from "../pages/Dashboard/AdminDashboard/AllUsers";
 import Admin from "../pages/Dashboard/AdminDashboard/Admin";
 import AdminFacility from "../pages/Dashboard/AdminDashboard/AdminFacility";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
         path : '/facilityBooking/:id',
         element : <ProtectedRoute role='user'><Booking></Booking></ProtectedRoute>
       },
+      {
+        path : "/about",
+        element : <AboutUs></AboutUs>
+      },
+      {
+        path : "/contactUs",
+        element : <ContactUs />
+      }
     ],
   },
   {

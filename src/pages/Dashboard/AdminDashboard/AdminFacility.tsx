@@ -20,7 +20,6 @@ const AdminFacility = () => {
     const [loading, setLoading] = useState(false)
 
     const handleDelete = async (id: string) => {
-        console.log(id);
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -73,6 +72,7 @@ const AdminFacility = () => {
         try {
             const res = await createFacility(facilityInfo)
             if (res?.data?.success) {
+                target.reset()
                 toast.success(`${res?.data?.massage}`)
                 setLoading(false),
                     (document.getElementById("modalForCreateFacility") as HTMLDialogElement)!.close()!
@@ -133,6 +133,7 @@ const AdminFacility = () => {
         try {
             const res = await updateFacility(facilityInfo)
             if (res?.data?.success) {
+                target.reset()
                 toast.success(`${res?.data?.massage}`)
                 setLoading(false),
                     (document.getElementById("modalForUpdateFacility") as HTMLDialogElement)!.close()!

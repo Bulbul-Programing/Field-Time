@@ -89,7 +89,7 @@ const AdminDashboardHome = () => {
       )}
 
       <div
-        className={`fixed top-0 left-0 h-screen bg-[#f1f2f7] text-black transition-all duration-300 ease-in-out transform ${isExpanded ? "w-48" : "w-16"
+        className={`absolute top-0 left-0 h-screen lg:block bg-[#f1f2f7] text-black transition-all duration-300 ease-in-out transform ${isExpanded ? "w-48 block" : "w-16 hidden"
           } ${isDrawerOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           } z-30`}
         onMouseEnter={handleMouseEnter}

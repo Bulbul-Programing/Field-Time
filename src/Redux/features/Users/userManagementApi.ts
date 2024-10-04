@@ -26,6 +26,7 @@ const userManagementApi = baseApi.injectEndpoints({
           body: args,
         };
       },
+      invalidatesTags: ['user']
     }),
     loginUser: builder.mutation({
       query: (args) => {
@@ -37,14 +38,33 @@ const userManagementApi = baseApi.injectEndpoints({
       },
     }),
     getAllUser: builder.query({
-      query: (role) => {
-        return {
-          url: `/auth/userRole/${role}`,
-          method : "GET",
+      query: (query) => {
+        const param = new URLSearchParams()
+        if (query?.args) {
+          const key = Object.keys(query?.args)
+          const value = Object.values(query?.args)
+          for (let index = 0; index < key.length; index++) {
+            param.append(key[index], value[index] as string)
+          }
         }
-      }
+        return {
+          url: `/auth/userRole/${query.role}`,
+          method : "GET",
+          params : param
+        }
+      },
+      providesTags:['user']
+    }),
+    deleteUser : builder.mutation({
+      query : (id) => {
+        return {
+          url : `/auth/deleteUser/${id}`,
+          method: 'DELETE',
+        }
+      },
+      invalidatesTags : ['user']
     })
   }),
 });
 
-export const { useIsUserExistQuery, useGetAllUserQuery, useRegisterUserMutation, useLoginUserMutation, useUserInfoQuery } = userManagementApi;
+export const { useIsUserExistQuery,useDeleteUserMutation, useGetAllUserQuery, useRegisterUserMutation, useLoginUserMutation, useUserInfoQuery } = userManagementApi;

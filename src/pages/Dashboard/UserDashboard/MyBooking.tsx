@@ -97,6 +97,7 @@ const MyBooking = () => {
 
             if (res?.data?.success) {
                 toast.success(`Booking update successfully`)
+                e.currentTarget.reset()
                 setStartTime('')
                 setEndTime('')
                 setDate('')
@@ -331,7 +332,6 @@ const MyBooking = () => {
                                     <option value="canceled">Canceled</option>
                                 </select>
                                 <div className='flex items-center justify-end gap-x-2 mt-5'>
-                                    
                                     {
                                         updateStatus ? loading ? <span className="loading loading-dots loading-md"></span> : <input type='submit' className='bg-[#3498DB] hover:bg-[#298cce] my-2 text-white btn ' value='Update Booking' /> : <input disabled className='text-black btn ' value='Update Booking' />
                                     }

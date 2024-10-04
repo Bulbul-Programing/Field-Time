@@ -12,7 +12,7 @@ const AllBooking = () => {
     }
     return (
         <div>
-            <button className='text-3xl bg-white px-4 rounded-lg py-2 font-semibold '>Total Booking <span className='font-bold text-blue-500'>{data?.data?.length}</span></button>
+            <button className='text-xl my-2 bg-white px-4 rounded-lg py-2 font-semibold '>Total Booking <span className='font-bold text-blue-500'>{data?.data?.length}</span></button>
             <div>
                 <div className="overflow-x-auto">
                     <table className="table">
