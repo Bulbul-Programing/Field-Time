@@ -7,6 +7,7 @@ export type TBookingModal = {
     startTime: string
     user: string
     _id: string
+    paymentStatus : string
   }
   
   export type Facility = {
@@ -34,6 +35,7 @@ export type TBookingModal = {
     isBooked: "confirmed",
     payableAmount: 440,
     startTime: "10:20",
+    paymentStatus : 'paid',
     user: "66f43d6fa20f719891536e3f",
     _id: "66f69e84aba4ec680d2f81d9"
   };

@@ -4,40 +4,40 @@ const bookingManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     userAllBooking: builder.query({
       query: (args) => {
-        const param = new URLSearchParams()
+        const param = new URLSearchParams();
         if (args) {
-          const key = Object.keys(args)
-          const value = Object.values(args)
+          const key = Object.keys(args);
+          const value = Object.values(args);
           for (let index = 0; index < key.length; index++) {
-            param.append(key[index], value[index] as string)
+            param.append(key[index], value[index] as string);
           }
         }
         return {
           url: `/bookings/user`,
           method: "GET",
-          params: param
+          params: param,
         };
       },
-      providesTags: ['booking']
+      providesTags: ["booking"],
     }),
-    
+
     adminAllBooking: builder.query({
       query: (args) => {
-        const param = new URLSearchParams()
+        const param = new URLSearchParams();
         if (args) {
-          const key = Object.keys(args)
-          const value = Object.values(args)
+          const key = Object.keys(args);
+          const value = Object.values(args);
           for (let index = 0; index < key.length; index++) {
-            param.append(key[index], value[index] as string)
+            param.append(key[index], value[index] as string);
           }
         }
         return {
           url: `/bookings`,
           method: "GET",
-          params: param
+          params: param,
         };
       },
-      providesTags: ['booking']
+      providesTags: ["booking"],
     }),
 
     createBooking: builder.mutation({
@@ -48,7 +48,7 @@ const bookingManagementApi = baseApi.injectEndpoints({
           body: args,
         };
       },
-      invalidatesTags: ['booking']
+      invalidatesTags: ["booking"],
     }),
     updateBooking: builder.mutation({
       query: (args) => {
@@ -58,27 +58,42 @@ const bookingManagementApi = baseApi.injectEndpoints({
           body: args,
         };
       },
-      invalidatesTags: ['booking']
+      invalidatesTags: ["booking"],
     }),
     checkAvailability: builder.query({
       query: (args) => {
-        const param = new URLSearchParams()
+        const param = new URLSearchParams();
         if (args) {
-          const key = Object.keys(args)
-          const value = Object.values(args)
+          const key = Object.keys(args);
+          const value = Object.values(args);
           for (let index = 0; index < key.length; index++) {
-            param.append(key[index], value[index] as string)
+            param.append(key[index], value[index] as string);
           }
         }
         return {
           url: `/check-availability`,
-          method : 'GET',
-          params : param
-        }
-      }
-    })
-
+          method: "GET",
+          params: param,
+        };
+      },
+    }),
+    processToCheckout: builder.mutation({
+      query: (args) => {
+        return {
+          url: "/payment/checkout",
+          method: "POST",
+          body: args,
+        };
+      },
+    }),
   }),
 });
 
-export const {useAdminAllBookingQuery, useUserAllBookingQuery,useCreateBookingMutation, useUpdateBookingMutation, useCheckAvailabilityQuery} = bookingManagementApi;
+export const {
+  useAdminAllBookingQuery,
+  useUserAllBookingQuery,
+  useCreateBookingMutation,
+  useUpdateBookingMutation,
+  useCheckAvailabilityQuery,
+  useProcessToCheckoutMutation
+} = bookingManagementApi;

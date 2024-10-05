@@ -8,6 +8,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
 import { GrStatusGood } from "react-icons/gr";
 import { RxCrossCircled } from "react-icons/rx";
+import { MdPayment } from "react-icons/md";
 
 
 type TBooking = {
@@ -210,6 +211,15 @@ const Calendar = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-x-1 mt-1 ml-1">
+                    <FaMoneyBill1Wave className="text-2xl text-blue-500"></FaMoneyBill1Wave>
+                    <p className="font-medium">
+                      <span className="text-lg font-bold text-green-600">
+                        ${selectBooking.payableAmount}
+                      </span>{" "}
+                      Payable amount
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-x-1 mt-1 ml-1">
                     <FaCalendarAlt className="text-2xl text-blue-500"></FaCalendarAlt>
                     <p className="text-lg font-bold">{selectBooking.date}</p>
                   </div>
@@ -242,6 +252,18 @@ const Calendar = () => {
                      Status {' '}
                       <span className={`text-lg font-bold ${selectBooking.isBooked === 'confirmed' ? 'text-green-500' : 'text-red-500'}`}>
                         {selectBooking.isBooked}
+                      </span>{" "}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-x-1 mt-1">
+                    {
+                      selectBooking.paymentStatus === 'paid' ? <MdPayment className="text-green-500 text-2xl" /> : <MdPayment className="text-red-500 text-2xl" />
+                    }
+                    
+                    <p className="font-medium">
+                     Status {' '}
+                      <span className={`text-lg font-bold ${selectBooking.paymentStatus === 'paid' ? 'text-green-500' : 'text-red-500'}`}>
+                        {selectBooking.paymentStatus}
                       </span>{" "}
                     </p>
                   </div>

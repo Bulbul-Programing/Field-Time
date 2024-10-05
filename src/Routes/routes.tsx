@@ -18,6 +18,8 @@ import Admin from "../pages/Dashboard/AdminDashboard/Admin";
 import AdminFacility from "../pages/Dashboard/AdminDashboard/AdminFacility";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import ContactUs from "../pages/ContactUs/ContactUs";
+import PaymentSuccess from "../components/PaymentSuccess/PaymentSuccess";
+import PaymentFelid from "../components/PaymentFelid/PaymentFelid";
 
 const router = createBrowserRouter([
   {
@@ -106,6 +108,15 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register></Register>,
   },
+  {
+    path : '/paymentSuccess',
+    element : <PaymentSuccess />
+  },
+  {
+    path : '/paymentFelid',
+    element : <PaymentFelid />
+  },
+
 ]);
 
 export default router;
