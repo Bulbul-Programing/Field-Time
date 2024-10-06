@@ -270,7 +270,9 @@ const Booking = () => {
               <div className="flex items-center justify-end gap-x-2 mt-5">
                 {updateStatus ? (
                   loading ? (
-                    <span className="loading loading-dots loading-md"></span>
+                    <button disabled className=" my-2 btn ">
+                      <span className="loading loading-dots text-black loading-md"></span>
+                    </button>
                   ) : (
                     <input
                       type="submit"
