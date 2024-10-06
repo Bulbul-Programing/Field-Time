@@ -33,6 +33,7 @@ const AllBooking = () => {
                                         <td className="min-w-52">
                                             <p >Name: <span className='font-semibold'>{booking.facility.name}</span> </p>
                                             <p >Location: <span className='font-semibold'>{booking.facility.location}</span> </p>
+                                            <p >Payment Status: <span className={`font-semibold ${booking.paymentStatus === 'paid' ? 'text-blue-500':'text-orange-500' }`}>{booking.paymentStatus}</span> </p>
                                         </td>
                                         <td className='min-w-40'>
                                             <p >Name: <span className='font-semibold'>{booking.user.name}</span> </p>

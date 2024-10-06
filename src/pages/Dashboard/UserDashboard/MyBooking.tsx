@@ -100,7 +100,6 @@ const MyBooking = () => {
 
       if (res?.data?.success) {
         toast.success(`Booking update successfully`);
-        e.currentTarget.reset();
         setStartTime("");
         setEndTime("");
         setDate("");

@@ -1,50 +1,52 @@
-# React + TypeScript + Vite
+# Sports Facility Booking Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application for users to seamlessly book sports facilities in their locality. This platform enables users to view, select, and book sports facilities based on availability and preferences.
 
-Currently, two official plugins are available:
+## Table of Contents
+- [Project Description](#project-description)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Installation Guidelines](#installation-guidelines)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Project Description
+The Sports Facility Booking Platform allows users to search and reserve sports venues for various activities. Whether it's for a tennis court, football ground, or swimming pool, users can check availability, book slots, and make payments through a user-friendly interface.
 
-## Expanding the ESLint configuration
+## Features
+- 🔍 Search for sports facilities by location and sport type
+- 🗓️ View real-time availability of facilities
+- 💸 Book facilities and make payments online
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technology Stack
+This project uses the following technologies and dependencies:
 
-- Configure the top-level `parserOptions` property like this:
+### **Frontend**
+- **React**: UI Framework
+- **Tailwind CSS**: Styling Framework
+- **Framer Motion**: Animations
+- **Swiper**: Carousel for showcasing facilities
+- **React Datepicker & Datetime Picker**: For selecting dates and times
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### **State Management**
+- **Redux Toolkit**: State management solution
+- **Redux Persist**: Persistent state handling
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### **Utilities**
+- **JWT Decode**: Decoding JWT for authentication
+- **SweetAlert2**: Alerts and confirmations
+- **React Toastify**: Notifications
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### **Development Tools**
+- **Vite**: Frontend tooling for faster builds
+- **ESLint**: Code linting for best practices
+- **Typescript**: Static typing for safer code
+
+## Installation Guidelines
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/Bulbul-Programing/Field-Time

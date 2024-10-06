@@ -23,7 +23,7 @@ const MainLayout = () => {
     });
   };
   window.addEventListener("scroll", toggleVisible);
-  console.log(visible);
+  
   return (
     <div className="relative">
       <Navbar></Navbar>

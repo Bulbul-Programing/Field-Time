@@ -8,6 +8,7 @@ import {
 import { TAvailableSlots } from "../../Types/TAvailableSlots";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
+import { toast } from "sonner";
 
 const Booking = () => {
   const { id } = useParams();
@@ -24,7 +25,7 @@ const Booking = () => {
   );
   const [loading, setLoading] = useState(false);
   const facility = data?.data;
-  const [processToCheckout] = useProcessToCheckoutMutation()
+  const [processToCheckout] = useProcessToCheckoutMutation();
 
   useEffect(() => {
     if (date && startTime && endTime) {
@@ -38,7 +39,7 @@ const Booking = () => {
     setSelectedDate(currentDate.toISOString().split("T")[0]); // Update state with new date
   };
 
-  const handleBookingUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleBookingCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     const bookingInfo = {
@@ -47,8 +48,20 @@ const Booking = () => {
       startTime,
       endTime,
     };
-    const res = await processToCheckout(bookingInfo)
-    window.location.replace(res?.data?.url)
+    try {
+      const res = await processToCheckout(bookingInfo);
+      console.log(res);
+      if (res?.error) {
+        setLoading(false)
+        return toast.error(`${(res.error as any).data.message}`);
+      }
+      window.location.replace(res?.data?.url)
+    } catch (err: any) {
+      console.log(err);
+      // toast.error(`${err?.error?.data?.message}`);
+    }
+
+    // window.location.replace(res?.data?.url)
     // try {
     //   const res = await addBooking(bookingInfo);
     //   console.log(res);
@@ -107,23 +120,25 @@ const Booking = () => {
           <div className=" w-full md:w-1/2 lg:w-1/2">
             <img
               className="w-full h-[250px] rounded-lg"
-              src={facility.image}
+              src={facility?.image}
               alt=""
             />
           </div>
           <div className="w-full md:w-1/2 lg:w-1/2">
-            <h1 className="text-2xl font-bold mb-3">{facility.name} Booking</h1>
+            <h1 className="text-2xl font-bold mb-3">
+              {facility?.name} Booking
+            </h1>
             <p className="font-medium text-slate-500 mb-4">
-              {facility.description}
+              {facility?.description}
             </p>
             <div className="flex gap-x-2 items-center my-1">
               <FaLocationDot className="text-2xl text-red-500" />
-              <p className="font-medium">{facility.location}</p>
+              <p className="font-medium">{facility?.location}</p>
             </div>
             <div className="flex gap-x-2 items-center my-1">
               <FaMoneyBill1Wave className="text-2xl text-blue-500" />
               <p className="font-semibold text-blue-500 text-2xl flex items-center gap-x-1">
-                ${facility.pricePerHour}{" "}
+                ${facility?.pricePerHour}{" "}
                 <span className="text-sm text-black">/ per hour</span>
               </p>
             </div>
@@ -197,7 +212,7 @@ const Booking = () => {
       <dialog id="bookingModal" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <div>
-            <form onSubmit={handleBookingUpdate} className=" pt-5 w-full ">
+            <form onSubmit={handleBookingCheckout} className=" pt-5 w-full ">
               <label className="grid grid-cols-3 mb-3 justify-center gap-x-3 items-center">
                 <label>
                   <label className="block text-gray-700 mb-2 text-xs md:text-sm lg:text-sm font-medium">

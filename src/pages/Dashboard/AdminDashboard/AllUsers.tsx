@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import Swal from "sweetalert2";
 
 const AllUsers = () => {
-  const { data, isLoading } = useGetAllUserQuery({ role :"user"})
+  const { data, isLoading } = useGetAllUserQuery({ role: "user" });
   const [deleteUser] = useDeleteUserMutation();
 
   const handleDelete = (id: string) => {
@@ -65,7 +65,10 @@ const AllUsers = () => {
           </thead>
           <tbody>
             {data?.data?.map((user: TUserWithId) => (
-              <tr key={user._id} className=" border border-slate-300 rounded-lg mt-[-20]">
+              <tr
+                key={user._id}
+                className=" border border-slate-300 rounded-lg mt-[-20]"
+              >
                 <td className="min-w-[250px]">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
@@ -96,21 +99,12 @@ const AllUsers = () => {
                   </p>
                 </td>
                 <th>
-                  {data?.data?.length === 1 ? (
-                    <button
-                      disabled
-                      className="btn bg-red-500 hover:bg-red-600 text-white"
-                    >
-                      Delete
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleDelete(user._id)}
-                      className="btn bg-red-500 hover:bg-red-600 text-white"
-                    >
-                      Delete
-                    </button>
-                  )}
+                  <button
+                    onClick={() => handleDelete(user._id)}
+                    className="btn bg-red-500 hover:bg-red-600 text-white"
+                  >
+                    Delete
+                  </button>
                 </th>
               </tr>
             ))}

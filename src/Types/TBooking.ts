@@ -15,6 +15,7 @@ export type TBooking = {
     isBooked: string
     payableAmount: number
     startTime: string
+    paymentStatus : string
     user: TUser
     _id: string
   }
