@@ -38,7 +38,7 @@ const Register = () => {
 
     // checking user exist or not
     setLoading(true)
-    const res = await axios.get(`https://level-two-assignment-three-omega.vercel.app/api/auth/isExistUser/${email}`)
+    const res = await axios.get(`https://assignment-three-sable.vercel.app/api/auth/isExistUser/${email}`)
     
 
     let profileImage;

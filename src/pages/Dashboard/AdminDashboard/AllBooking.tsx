@@ -36,9 +36,9 @@ const AllBooking = () => {
                                             <p >Payment Status: <span className={`font-semibold ${booking.paymentStatus === 'paid' ? 'text-blue-500':'text-orange-500' }`}>{booking.paymentStatus}</span> </p>
                                         </td>
                                         <td className='min-w-40'>
-                                            <p >Name: <span className='font-semibold'>{booking.user.name}</span> </p>
-                                            <p >Phone: <span className='font-semibold'>{booking.user.phone}</span> </p>
-                                            <p >Email: <span className='font-semibold'>{booking.user.email}</span> </p>
+                                            <p >Name: <span className='font-semibold'>{booking?.user?.name}</span> </p>
+                                            <p >Phone: <span className='font-semibold'>{booking?.user?.phone}</span> </p>
+                                            <p >Email: <span className='font-semibold'>{booking?.user?.email}</span> </p>
                                         </td>
                                         <td className=" min-w-32">
                                             <p >Date: <span className='font-semibold'>{booking.date}</span> </p>
